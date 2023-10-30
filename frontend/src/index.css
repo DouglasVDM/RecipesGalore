@@ -1,7 +1,7 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 body {
-  background-color: rgb(222, 222, 214);
+  background-color: rgb(246, 246, 243);
   line-height: 1rem;
   box-sizing: border-box;
 
@@ -17,4 +17,7 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.logo {
+  width: 15%;
 }
