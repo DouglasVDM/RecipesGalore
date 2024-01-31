@@ -1,6 +1,6 @@
  # Recipes Galore
 
-Recipes Galore is a collaborative project by Alex and Tersia. It's designed to help you discover and manage your favorite recipes effortlessly.
+Recipes Galore is a collaborative project by Alex, Tersia and Chris. It's designed to help you discover and manage your favorite recipes effortlessly.
 
 ## Features
 
