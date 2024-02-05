@@ -1,4 +1,5 @@
 import React from "react";
+import SignIn from "./SignIn";
 
 export const Header = () => {
   return (
@@ -7,12 +8,7 @@ export const Header = () => {
         <div className="d-flex justify-content-between align-items-center">
           <img src="/Group 7.png" alt="logo" className="logo img-fluid py-3" />
           <div className="btn">
-            <button type="button" class="btn btn-warning">
-              Log In
-            </button>
-            <button type="button" class="btn btn-warning mx-3">
-              Sign Up
-            </button>
+            <SignIn />
           </div>
         </div>
       </div>
