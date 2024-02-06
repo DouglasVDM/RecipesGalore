@@ -7,7 +7,7 @@ const session = require("express-session");
 const { OAuth2Client } = require("google-auth-library");
 
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID);
-console.log(client);
+// console.log(client);
 
 const app = express();
 app.use(express.json());
@@ -21,7 +21,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-
+//AUTH
 // === Route handler for handling authentication requests
 app.post("/auth", async (req, res) => {
   try {
@@ -90,6 +90,34 @@ app.post("/auth/logout", (req, res) => {
       res.json({ message: "Logout successful" });
     }
   });
+});
+//RECIPES
+app.get("/api/recipes/search", async (req, res) => {
+  const { keyword, diet, excludeIngredients } = req.query;
+
+  try {
+    console.log("Received request parameters:", {
+      keyword,
+      diet,
+      excludeIngredients,
+    });
+
+    const recipesResponse = await axios.get(
+      "https://api.spoonacular.com/recipes/complexSearch",
+      {
+        params: {
+          apiKey: process.env.SPOONACULAR_API_KEY,
+          query: keyword,
+          diet,
+          excludeIngredients: excludeIngredients,
+        },
+      }
+    );
+    res.json(recipesResponse.data.results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
 });
 
 const PORT = process.env.PORT || 5000;
