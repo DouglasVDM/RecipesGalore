@@ -21,3 +21,11 @@ code {
 .logo {
   width: 15%;
 }
+
+.rounded-pill {
+  border-radius: 50rem !important;
+}
+
+.text-light{
+  background-color: #0B5345;
+}

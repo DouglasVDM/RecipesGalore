@@ -77,7 +77,7 @@ function SignIn() {
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
-        <button onClick={googleLogin}> Sign in with Google 🚀</button>
+        <button className="rounded-pill btn btn-light" onClick={googleLogin}> Sign in with Google 🚀</button>
       )}
     </div>
   );

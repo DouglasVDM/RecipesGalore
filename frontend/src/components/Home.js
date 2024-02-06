@@ -71,11 +71,8 @@ const Home = () => {
 
   return (
     <>
-      <h6 className="text-center py-4 lh-lg">
-        Search recipes from all over the world. <br></br>Create an account to
-        save your favorite recipes. ✨
-      </h6>
-      <div className="d-flex align-items-center">
+     
+      <div className="d-flex align-items-center mx-2 my-5 ">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 col-sm-8">
