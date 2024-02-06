@@ -1,79 +1,44 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import RecipeCard from "./RecipeCard";
 
 const Home = () => {
   const [keyword, setKeyword] = useState("");
   const [diet, setDiet] = useState("none");
-  const [exclude, setExclude] = useState("");
+  const [excludeIngredients, setExcludeIngredients] = useState("");
   const [response, setResponse] = useState(null);
-  const [recipeInfo, setRecipeInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const SPOONACULAR_API_KEY = "13a1325476ec4f59ac3b4436e2932aae";
-
-  // Gets the recipes matching the input term
   const getRecipes = async () => {
     try {
-      const res = await axios.get(
-        "https://api.spoonacular.com/recipes/complexSearch",
-        {
-          params: {
-            apiKey: SPOONACULAR_API_KEY,
-            query: keyword,
-            diet,
-            excludeIngredients: exclude,
-          },
-        }
-      );
-
-      const { data } = res;
-      setResponse(data.results);
+      setLoading(true);
+      const res = await axios.get("/api/recipes/search", {
+        params: { keyword, diet, excludeIngredients },
+      });
+      setResponse(res.data);
+      setError(null);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching recipes:", error);
+      setError("Error fetching recipes. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Function to get specific recipe information by ID
-  const getRecipeInfo = async (recipeId) => {
-    try {
-      const res = await axios.get(
-        `https://api.spoonacular.com/recipes/${recipeId}/information`,
-        {
-          params: {
-            apiKey: SPOONACULAR_API_KEY,
-            includeNutrition: false,
-          },
-        }
-      );
-      const { data } = res;
-      // Extract the specific data you need
-      const { readyInMinutes, servings, sourceUrl } = data;
-
-      // Create an object with the extracted data
-      const recipeInfoData = {
-        readyInMinutes,
-        servings,
-        sourceUrl,
-      };
-
-      setRecipeInfo(recipeInfoData);
-    } catch (error) {
-      console.error(error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Only fetch recipes if keyword is not empty
+    if (keyword.trim() !== "") {
+      await getRecipes();
     }
   };
-  // Use the useEffect hook to fetch recipe information when response changes
-  useEffect(() => {
-    if (response && response.length > 0) {
-      // Assuming you want to get information for the first recipe in the response
-      getRecipeInfo(response[0].id);
-    }
-  }, [response]);
 
   return (
     <>
       <h6 className="text-center py-4 lh-lg">
-        Search recipes from all over the world. <br></br>Create an account to
-        save your favorite recipes. ✨
+        Search recipes from all over the world. <br /> Create an account to save
+        your favorite recipes. ✨
       </h6>
       <div className="d-flex align-items-center">
         <div className="container">
@@ -81,10 +46,7 @@ const Home = () => {
             <div className="col-12 col-sm-8">
               <form
                 className="px-5 border border-black bg-success"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  getRecipes();
-                }}
+                onSubmit={handleSubmit}
               >
                 <div className="my-3">
                   <label htmlFor="recipe" className="form-label">
@@ -132,8 +94,8 @@ const Home = () => {
                     type="text"
                     className="form-control"
                     placeholder="coconut"
-                    value={exclude}
-                    onChange={(e) => setExclude(e.target.value)}
+                    value={excludeIngredients}
+                    onChange={(e) => setExcludeIngredients(e.target.value)}
                   />
                 </div>
 
@@ -148,29 +110,12 @@ const Home = () => {
         </div>
       </div>
 
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
       {response && (
         <div className="mt-5 p-5 row">
-          {response.map((recipe) => (
-            <div key={recipe.id} className="col-sm-4 mb-4">
-              <div className="card h-100">
-                <img
-                  src={recipe.image}
-                  className="card-img-top"
-                  alt={recipe.id}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{recipe.title}</h5>
-                  <p className="card-text">
-                    {recipeInfo &&
-                      recipeInfo.readyInMinutes &&
-                      recipeInfo.servings &&
-                      `Ready in ${recipeInfo.readyInMinutes} minutes -
-                      ${recipeInfo.servings} Servings`}
-                  </p>
-                  <a href={recipeInfo && recipeInfo.sourceUrl}>Go to Recipe</a>
-                </div>
-              </div>
-            </div>
+          {response.map((recipe, index) => (
+            <RecipeCard key={index} recipe={recipe} />
           ))}
         </div>
       )}
