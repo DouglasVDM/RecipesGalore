@@ -3,14 +3,18 @@ import React from "react";
 import { Navbar, Nav, Form } from "react-bootstrap";
 import SignIn from "./SignIn";
 
-export const Header = () => {
+const Header = () => {
   return (
     <Navbar className="h-100 w-100 text-light">
       <Navbar.Brand href="#home">
-        <img src="/Group 7.png" alt="logo" className="logo img-fluid py-2 mx-2 my-2 w-25 h-25" />
+        <img
+          src="/logo.png"
+          alt="logo"
+          className="logo img-fluid py-2 mx-2 my-2 w-25 h-25"
+        />
       </Navbar.Brand>
       <Nav className="ml-auto">
-      <h6 className="text-center py-4 px-4 text-dark lh-lg">
+        <h6 className="text-center py-4 px-4 text-dark lh-lg">
           Search recipes from all over the world. <br></br>Create an account to
           save your favorite recipes. ✨<br></br>
         </h6>

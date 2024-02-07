@@ -1,7 +1,8 @@
 import React from "react";
 import Home from "./components/Home";
 import Header from "./components/Header";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from "./components/Footer";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   return (
