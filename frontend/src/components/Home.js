@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import RecipeCard from "./RecipeCard";
+import { SEARCH_RECIPES_URL } from "../constants.js";
 
 const Home = () => {
   const [keyword, setKeyword] = useState("");
@@ -13,7 +14,7 @@ const Home = () => {
   const getRecipes = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("/api/recipes/search", {
+      const res = await axios.get(SEARCH_RECIPES_URL, {
         params: { keyword, diet, excludeIngredients },
       });
       setResponse(res.data);
