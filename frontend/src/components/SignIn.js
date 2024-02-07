@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { AUTH_URL, LOGOUT_URL } from "../constants.js";
 
 function SignIn() {
   const [user, setUser] = useState(null);
-
 
   // === STEP 1
   const googleLogin = useGoogleLogin({
@@ -12,7 +12,7 @@ function SignIn() {
       // Send the authorization code to the backend server
       axios
         .post(
-          "/auth",
+          AUTH_URL,
           { code: codeResponse.code },
           {
             headers: {
@@ -35,7 +35,6 @@ function SignIn() {
     flow: "auth-code",
   });
 
-
   // === STEP 2
   const handleLoginSuccess = (tokens) => {
     // tokens contain user details and the access token
@@ -48,7 +47,6 @@ function SignIn() {
     // Store the access token in local storage for persistence
     localStorage.setItem("accessToken", tokens.access_token);
   };
-  
 
   // === STEP 3
   const handleLogout = () => {
@@ -59,7 +57,7 @@ function SignIn() {
 
     // API call to backend to logout the user
     axios
-      .post("/auth/logout")
+      .post(LOGOUT_URL)
       .then(() => {
         console.log("User logged out");
       })

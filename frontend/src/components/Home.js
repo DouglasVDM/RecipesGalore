@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import RecipeCard from "./RecipeCard";
+import { SEARCH_RECIPES_URL } from "../constants.js";
 
 const Home = () => {
   const [keyword, setKeyword] = useState("");
   const [diet, setDiet] = useState("none");
-  const [exclude, setExclude] = useState("");
+  const [excludeIngredients, setExcludeIngredients] = useState("");
   const [response, setResponse] = useState(null);
 
   const getRecipes = async () => {
@@ -82,8 +84,8 @@ const Home = () => {
                     type="text"
                     className="form-control"
                     placeholder="coconut"
-                    value={exclude}
-                    onChange={(e) => setExclude(e.target.value)}
+                    value={excludeIngredients}
+                    onChange={(e) => setExcludeIngredients(e.target.value)}
                   />
                 </div>
 
@@ -98,6 +100,8 @@ const Home = () => {
         </div>
       </div>
 
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
       {response && (
         <div className="mt-5 p-5 row">
           {response.map((recipe) => (
