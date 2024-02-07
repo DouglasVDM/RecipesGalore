@@ -1,6 +1,10 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 body {
+  background-image: url('../public/food2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   background-color: rgb(246, 246, 243);
   line-height: 1rem;
   box-sizing: border-box;
@@ -18,6 +22,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 .logo {
   width: 15%;
+}
+
+.rounded-pill {
+  border-radius: 50rem !important;
+}
+
+.text-light {
+  background: rgb(120,238,240);
+  background: radial-gradient(circle, rgba(120,238,240,1) 0%, rgba(3,69,84,1) 83%);
+}
+
+.form-label {
+  background: linear-gradient(to right, rgba(120, 238, 240, 0.5), rgba(255, 255, 255, 1));
+  color: rgb(1, 13, 17);
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 15px;
 }
