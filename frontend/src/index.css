@@ -25,10 +25,16 @@ code {
 
 .logo {
   width: 15%;
+  padding: 10px;
 }
 
-.rounded-pill {
-  border-radius: 50rem !important;
+.signin-container {
+  background-color: lightblue;
+  padding: 5px;
+  float: left;
+}
+.navText{
+ padding: 20px
 }
 
 .text-light {
@@ -41,5 +47,5 @@ code {
   color: rgb(1, 13, 17);
   padding: 10px;
   border-radius: 5px;
-  margin-left: 15px;
+  
 }

@@ -6,7 +6,7 @@ const Footer = () => {
         <Container className="foot-container mt-4 " fluid
         style={{ 
             backgroundColor: "gray", 
-            position: "fixed", 
+            position: "", 
             bottom: "0", 
             width: "100%",
             paddingBottom: "20px" }}
