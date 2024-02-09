@@ -1,84 +1,27 @@
-import React, { useState } from "react";
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
-import { AUTH_URL, LOGOUT_URL } from "../constants.js";
+import React from 'react';
+import { GoogleLogin } from 'react-google-login';
 
-function SignIn() {
-  const [user, setUser] = useState(null);
-
-  // === STEP 1
-  const googleLogin = useGoogleLogin({
-    onSuccess: (codeResponse) => {
-      // Send the authorization code to the backend server
-      axios
-        .post(
-          AUTH_URL,
-          { code: codeResponse.code },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "Cross-Origin-Opener-Policy": "same-origin allow-popups",
-            },
-          }
-        )
-        .then((response) => {
-          console.log("Backend response:", response.data);
-          handleLoginSuccess(response.data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    },
-    onError: () => {
-      console.error("Google login failed");
-    },
-    flow: "auth-code",
-  });
-
-  // === STEP 2
-  const handleLoginSuccess = (tokens) => {
-    // tokens contain user details and the access token
-    setUser({
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token,
-      profile: tokens.data.profile || {},
-    });
-
-    // Store the access token in local storage for persistence
-    localStorage.setItem("accessToken", tokens.access_token);
+const SignIn = ({ onSuccess, onFailure }) => {
+  const responseGoogle = (response) => {
+    if (response.tokenId) {
+      onSuccess(response);
+    } else {
+      onFailure(response);
+    }
   };
 
-  // === STEP 3
-  const handleLogout = () => {
-    // Clear user data from state
-    setUser(null);
-    // Clear user data from local storage
-    localStorage.removeItem("accessToken");
-
-    // API call to backend to logout the user
-    axios
-      .post(LOGOUT_URL)
-      .then(() => {
-        console.log("User logged out");
-      })
-      .catch((error) => {
-        console.error("Logout error:", error);
-      });
-  };
   return (
-    <div>
-      {user ? (
-        <div>
-          <h4>Welcome, {user.profile ? user.profile.name : "User"}</h4>
-
-          <p>{user.profile ? user.profile.email : "Email"}</p>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      ) : (
-        <button className="rounded-pill btn btn-light" onClick={googleLogin}> Sign in with Google 🚀</button>
-      )}
+    <div  className="signin-container">
+       <GoogleLogin
+      clientId="632795198966-sk7i3qcssuhii2chv320serma1cfir0m.apps.googleusercontent.com"
+      buttonText="Login with Google"
+      onSuccess={responseGoogle}
+      onFailure={responseGoogle}
+      cookiePolicy={'single_host_origin'}
+    />
     </div>
+   
   );
-}
+};
 
 export default SignIn;
