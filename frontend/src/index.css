@@ -61,15 +61,16 @@ code {
   
 }
 
-.footer {
-  background-color: rgba(3,69,84,1);
-  position: absolute;
-  color: #fff;
-  position:absolute;
-  left:0;
-  bottom:0;
-  right:0; 
-  justify-content: center;
-  padding: 10px;
+.container-home{
+  margin: 70px;
+  padding: 70px;
 }
 
+.footer {
+  background-color: rgba(3, 69, 84, 1);
+  color: #fff;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

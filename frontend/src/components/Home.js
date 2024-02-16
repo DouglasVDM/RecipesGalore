@@ -1,42 +1,33 @@
-import React, { useState } from "react";
-import axios from "axios";
-import RecipeCard from "./RecipeCard";
-import { SEARCH_RECIPES_URL } from "../constants.js";
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Home = () => {
-  const [keyword, setKeyword] = useState("");
-  const [diet, setDiet] = useState("none");
-  const [excludeIngredients, setExcludeIngredients] = useState("");
-  const [response, setResponse] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+const RecipeSearch = () => {
+  const [query, setQuery] = useState('');
+  const [recipes, setRecipes] = useState([]);
+  const [showMore, setShowMore] = useState(false);
+  const [keyword, setKeyword] = useState('');
+  const [diet, setDiet] = useState('none');
+  const [excludeIngredients, setExcludeIngredients] = useState('');
 
-  const getRecipes = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get(SEARCH_RECIPES_URL, {
-        params: { keyword, diet, excludeIngredients },
-      });
-      setResponse(res.data);
-      setError(null);
-    } catch (error) {
-      console.error("Error fetching recipes:", error);
-      setError("Error fetching recipes. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
+  const searchRecipes = async () => {
+    const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=${showMore ? 100 : 20}&apiKey=f9182364c1d242fd8d9cd210473c9cb6`);
+    const data = await response.json();
+    setRecipes(data.results);
+    console.log(data.results.length); // Log the number of recipes
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Only fetch recipes if keyword is not empty
-    if (keyword.trim() !== "") {
-      await getRecipes();
-    }
+    searchRecipes();
+  };
+
+  const handleLoadMore = () => {
+    setShowMore(true);
   };
 
   return (
-    <>
+    <div className="container-home">
+      {/* <h1>Recipe Search</h1> */}
       <div className="d-flex align-items-center">
         <div className="container">
           <div className="row justify-content-center">
@@ -104,17 +95,38 @@ const Home = () => {
         </div>
       </div>
 
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      {response && (
-        <div className="mt-5 p-5 row">
-          {response.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} />
-          ))}
-        </div>
+      {/* <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search for recipes..."
+          className="form-control"
+        />
+        <button type="submit" className="btn btn-primary mt-3">
+          Search
+        </button>
+      </form> */}
+      <div className="row mt-4">
+        {recipes.map((recipe) => (
+          <div key={recipe.id} className="col-md-4 mb-4">
+            <div className="card">
+              <img src={recipe.image} alt={recipe.title} className="card-img-top" />
+              <div className="card-body">
+                <h5 className="card-title">{recipe.title}</h5>
+                <p className="card-text">Likes: {recipe.likes}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      {!showMore && recipes.length > 10 && (
+        <button onClick={handleLoadMore} className="btn btn-primary mt-4">
+          Load More
+        </button>
       )}
-    </>
+    </div>
   );
 };
 
-export default Home;
+export default RecipeSearch;

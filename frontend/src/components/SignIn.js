@@ -13,7 +13,7 @@ const SignIn = ({ onSuccess, onFailure }) => {
   return (
     <div  className="signin-container">
        <GoogleLogin
-      clientId="632795198966-sk7i3qcssuhii2chv320serma1cfir0m.apps.googleusercontent.com"
+      clientId="36320771247-k67hqh9n2l1fkonfp2up04urh17h91ij.apps.googleusercontent.com"
       buttonText="Login with Google"
       onSuccess={responseGoogle}
       onFailure={responseGoogle}
