@@ -94,19 +94,6 @@ const RecipeSearch = () => {
           </div>
         </div>
       </div>
-
-      {/* <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for recipes..."
-          className="form-control"
-        />
-        <button type="submit" className="btn btn-primary mt-3">
-          Search
-        </button>
-      </form> */}
       <div className="row mt-4">
         {recipes.map((recipe) => (
           <div key={recipe.id} className="col-md-4 mb-4">
