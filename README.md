@@ -15,18 +15,91 @@ Before you begin, ensure you have the following prerequisites installed:
 - [Node.js](https://nodejs.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 
-## Installation
+<!-- START OF UBUNTU 22.04 LOCAL PROJECT SETUP -->
+## Installation (Ubuntu 22.04)
 
-1. Clone the repository:
+Fork the repository - [How to fork a repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#forking-a-repository)   
 
-   ```bash
-   git clone https://github.com/your-username/recipes-galore.git
+Clone your forked repository to your local machine - [How-to-clone-your-forked-repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#cloning-your-forked-repository)
 
+```
+git clone https://github.com/YOUR-USERNAME/RecipesGalore.git
+```
 
-   Navigate to the project directory:
+Navigate to the project directory
+```
+cd RecipesGalore 
+```
+Install Backend dependencies
+```
+npm i
+```
+Start the Node Express API
+```
+npm start
+```
 
-bash
-Copy code
+Open another terminal window  
+Navigate to the React App directory
+```
+cd frontend
+```
+Install React App dependencies
+```
+npm i
+```
+
+## In your terminal, after running the command above, if you encounter the error below
+```bash
+code ERESOLVE
+npm ERR! ERESOLVE could not resolve
+npm ERR! 
+npm ERR! While resolving: react-google-login@5.2.2
+npm ERR! Found: react@18.2.0
+npm ERR! node_modules/react
+npm ERR!   react@"^18.2.0" from the root project
+npm ERR!   peer react@"^16.8.0 || ^17.0.0-rc.1 || ^18.0.0" from @react-aria/ssr@3.9.1
+npm ERR!   node_modules/@react-aria/ssr
+npm ERR!     @react-aria/ssr@"^3.5.0" from @restart/ui@1.6.6
+npm ERR!     node_modules/@restart/ui
+npm ERR!       @restart/ui@"^1.6.6" from react-bootstrap@2.10.0
+npm ERR!       node_modules/react-bootstrap
+npm ERR!         react-bootstrap@"^2.10.0" from the root project
+npm ERR!   11 more (@react-oauth/google, @restart/hooks, @restart/ui, ...)
+npm ERR! 
+npm ERR! Could not resolve dependency:
+npm ERR! peer react@"^16 || ^17" from react-google-login@5.2.2
+npm ERR! node_modules/react-google-login
+npm ERR!   react-google-login@"^5.2.2" from the root project
+npm ERR! 
+npm ERR! Conflicting peer dependency: react@17.0.2
+npm ERR! node_modules/react
+npm ERR!   peer react@"^16 || ^17" from react-google-login@5.2.2
+npm ERR!   node_modules/react-google-login
+npm ERR!     react-google-login@"^5.2.2" from the root project
+npm ERR! 
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+npm ERR! 
+npm ERR! 
+npm ERR! For a full report see:
+npm ERR! /home/douglas/.npm/_logs/2024-02-27T21_39_25_522Z-eresolve-report.txt
+```
+Try forcing the dependency resolution by running the command below
+```bash
+npm i --legacy-peer-deps
+```
+Start the React App
+```
+npm start
+```
+<!-- END OF UBUNTU 22.04 SETUP -->
+
+### 
+
+``bash
+cd Copy code
 cd recipes-galore
 Install the project dependencies:
 
